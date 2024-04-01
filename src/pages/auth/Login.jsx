@@ -32,7 +32,7 @@ export default function LoginPage() {
       if (loginSession) {
         delete formData.email;
         await Login({ data: formData });
-        navigate('checklist', { replace: true });
+        navigate('checklist');
       } else {
         await Register({ data: formData });
         setLoginSession(true);

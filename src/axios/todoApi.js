@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-useless-catch */
 import axios from 'axios';
 
@@ -8,13 +9,14 @@ const TodoApi = axios.create({
 // Fungsi untuk menetapkan token bearer
 export const setBearerToken = (token) => {
   TodoApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  console.log(TodoApi.defaults.headers.common['Authorization']);
 };
 
 // auth
 export const Login = async ({ data }) => {
   try {
     const response = await TodoApi.post('/login', data);
-    const token = response.data.token;
+    const token = response.data.data.token;
     setBearerToken(token);
     return response;
   } catch (error) {
@@ -27,7 +29,7 @@ export const Register = ({ data }) => TodoApi.post('/register', data);
 // checklist
 export const GetAllChecklist = () => TodoApi.get('/checklist');
 export const CreateChecklist = ({ data }) => TodoApi.post('/checklist', data);
-export const DeleteChecklist = () => TodoApi.delete('/checklist');
+export const DeleteChecklist = ({ id }) => TodoApi.delete(`/checklist/${id}`);
 
 // checklist item
 export const GetAllChecklistItem = ({ id_checklist }) => TodoApi.get(`/checklist/${id_checklist}/item`);
