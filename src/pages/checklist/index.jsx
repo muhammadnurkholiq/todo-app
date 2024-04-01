@@ -6,6 +6,7 @@ import {
   Typography,
   Card,
   CardContent,
+  CardActions,
   Stack,
   Button,
   Dialog,
@@ -13,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Chip,
 } from '@mui/material';
 import { GetAllChecklist, CreateChecklist, DeleteChecklist } from '../../axios/todoApi';
 
@@ -105,17 +107,25 @@ const ChecklistPage = () => {
               <Grid item xs={6} sm={4} md={3} key={key}>
                 <Card sx={{ boxShadow: 3, cursor: 'pointer' }}>
                   <CardContent>
-                    <Stack>
-                      <Typography>Nama : {item.name}</Typography>
-                      <Typography>Task :{item?.items?.length} Item</Typography>
-                      <Typography>Status : {item?.checklistCompletionStatus ? 'Selesai' : 'Belum Selesai'} </Typography>
-                    </Stack>
-                    <Stack direction="row" spacing={2} mt={2}>
-                      <Button variant="contained" color="error" onClick={() => handleOpenDeleteModal(item.id)}>
-                        Delete
-                      </Button>
+                    <Stack spacing={2}>
+                      <Typography variant="h5">{item.name}</Typography>
+                      <Typography>Task: {item?.items?.length ? item?.items?.length : 0}</Typography>
+                      <Chip
+                        color={item?.checklistCompletionStatus ? 'success' : 'error'}
+                        label={item?.checklistCompletionStatus ? 'Selesai' : 'Belum Selesai'}
+                      />
                     </Stack>
                   </CardContent>
+                  <CardActions>
+                    <Stack direction="row" alignItems="center" justifyContent="center" spacing={2} sx={{ width: '100%' }}>
+                      <Button variant="contained" color="info" onClick={() => navigate(`${item?.id}/items`)}>
+                        Open
+                      </Button>
+                      <Button variant="contained" color="error" onClick={() => handleOpenDeleteModal(item.id)}>
+                        Hapus
+                      </Button>
+                    </Stack>
+                  </CardActions>
                 </Card>
               </Grid>
             ))}
