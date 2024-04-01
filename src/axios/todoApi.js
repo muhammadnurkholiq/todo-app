@@ -2,10 +2,9 @@
 import axios from 'axios';
 
 const TodoApi = axios.create({
-  baseURL: 'http://94.74.86.174:8080/api', // Ganti dengan URL API Anda
+  baseURL: 'http://94.74.86.174:8080/api',
 });
 
-// Fungsi untuk menetapkan token bearer
 export const setBearerToken = (token) => {
   TodoApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   console.log(TodoApi.defaults.headers.common['Authorization']);
